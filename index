@@ -1,0 +1,68 @@
+void setup() {
+  Serial.begin(115200);
+}
+
+void loop() {
+  menu();
+}
+
+void menu() {
+  Serial.println("\nBem vindo"); 
+  Serial.println("\n1- Soma \n2 - Subtracao \n3 - Divisao  \n4 - Multiplicacao  \n5 - Sair da calculadora");
+
+  while (!Serial.available());
+  int res = Serial.parseInt();
+
+  switch (res) {
+    case 1: soma(); break;
+    case 2: subtracao(); break; 
+    case 3: divisao(); break;
+    case 4: multiplicacao(); break;
+    case 5:
+    
+      Serial.println("\nObrigado pelo uso da calculadora");
+      while (!Serial.available());
+      Serial.println("\n");
+      break;
+    default: menu(); break; 
+  }
+}
+
+void operacao(char operador) {
+  Serial.print("\nDigite o primeiro valor da " + String(operador) + ": ");
+  while (!Serial.available());
+  float v1 = Serial.parseFloat();
+  
+  Serial.print("\n" + String(v1) + " " + String(operador) + " ");
+  while (!Serial.available());
+  float v2 = Serial.parseFloat();
+  Serial.print("\n" + String(v1) + " " + String(operador) + " " + String(v2) + "\n");
+  
+  float resultado;
+  switch (operador) {
+    case '+': resultado = v1 + v2; break;
+    case '-': resultado = v1 - v2; break;
+    case '/': resultado = v1 / v2; break;
+    case '*': resultado = v1 * v2; break;
+  }
+  
+  Serial.println("\nO resultado da " + String(operador) + " entre: " + String(v1) + " " + String(operador) + " " + String(v2) + " = " + String(resultado));
+  delay(10000);
+  Serial.println("\n");
+}
+
+void soma() {
+  operacao('+');
+}
+
+void subtracao() {
+  operacao('-');
+}
+
+void divisao() {
+  operacao('/');
+}
+
+void multiplicacao() {
+  operacao('*');
+}
